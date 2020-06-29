@@ -1,0 +1,72 @@
+---
+title: Context Docs
+tabs: ['Usage', 'Docs']
+description: Context Docs
+---
+
+<PageDescription>
+
+Connect the *view* to the model by using the *connect* HOC. 
+
+</PageDescription>
+
+## Description
+
+  - The *connect* HOC will consume the *selectProps* from the *context module* state, and will inject the decorated *actionProps* from the *context module*.
+
+  - It will use the *instanceId* passed to the connected component by the parent, or it will 
+  take the *instanceId* from the context.
+
+  - The *connect* HOC will also act as context provider for the passed *instanceId*.
+
+
+### E.g.:
+  - Given
+
+  ```ts
+  import { connect } from "redux-mvc"
+  import { noop } from "redux-mvc/utils"
+
+  import { getters, actions } from "../model"
+
+  const decorate = connect(
+      { count: getters.count },
+      { add: actions.add, reset: actions.reset }
+  )
+
+  const Counter = ({
+      count = 0,
+      add = noop,
+      reset = noop,
+  }) => (
+      <div>
+          <button
+              onClick={add}
+          >
+              add
+          </button>
+          <button style={{ marginRight: 10 }} onClick={reset}>
+              reset
+          </button>
+          <div>{count}</div>
+      </div>
+  )
+
+  export default decorate(Counter)
+  ```
+  
+  **Note:** any connected children of the *Counter* component will keep the right *instanceId* by default.
+
+  - Then we can render different instances of the same *Counter* module.
+
+  ```ts
+  import Counter from "ui-kit/Counter/View"
+
+  const Counters = () => (
+      <div>
+          <Counter />
+          <Counter instanceId="apples" />
+          <Counter instanceId="oranges" />
+      </div>
+  )
+  ```

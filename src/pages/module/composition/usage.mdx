@@ -1,0 +1,31 @@
+---
+title: Module Composition
+tabs: ['Usage', 'Docs']
+description: Guide for module composition
+---
+
+<PageDescription>
+
+*Modules* can be composed together to *reuse* different functionalities.
+
+</PageDescription>
+
+## Module Composition
+
+- To mix a module in follow this steps:
+
+  1. Use the *merge* decorator from *redux-mvc*
+  2. Continue creating the module as usual 
+
+  ```ts
+  const CounterAndSearchbar = R.compose(
+      createModule,
+      ...
+      merge(counter),
+      merge(searchBar)
+  )(model)
+
+  ```
+
+  **Note:** remember function composition works from right to left
+

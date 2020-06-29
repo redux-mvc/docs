@@ -1,42 +1,106 @@
 import React from 'react';
-import Footer from 'gatsby-theme-carbon/src/components/Footer';
+import PropTypes from 'prop-types';
+import { Row, Grid, Column } from 'gatsby-theme-carbon/src/components/Grid';
+import {
+  footer,
+  grid,
+  nav,
+  listItem,
+  content,
+} from './Footer.module.scss';
 
-const Content = ({ buildTime }) => (
-  <>
-    <p>
-      The <code>Content</code> component receives a <code>buildTime</code> prop
-      that to display your site's build time: {buildTime}
-    </p>
-    <p>
-      By importing the <strong>Footer</strong> component from
-      gatsby-theme-carbon, we can supply our own props.
-    </p>
-    <p>
-      The default export from a shadowed component will replace that component
-      in the theme.
-    </p>
-    <p>
-      <a href="https://www.gatsbyjs.org/docs/themes/api-reference/#component-shadowing">
-        More about component shadowing
-      </a>
-    </p>
-  </>
-);
-
-const links = {
-  firstCol: [
-    { href: 'https://ibm.com/design', linkText: 'Shadowed link' },
-    { href: 'https://ibm.com/design', linkText: 'Shadowed link' },
-    { href: 'https://ibm.com/design', linkText: 'Shadowed link' },
-  ],
-  secondCol: [
-    { href: 'https://ibm.com/design', linkText: 'Shadowed link' },
-    { href: 'https://ibm.com/design', linkText: 'Shadowed link' },
-    { href: 'https://ibm.com/design', linkText: 'Shadowed link' },
-    { href: 'https://ibm.com/design', linkText: 'Shadowed link' },
-  ],
+const Footer = ({ Content, links, Logo }) => {
+  const { firstCol, secondCol } = links;
+  return (
+    <footer className={footer}>
+      <Grid className={grid}>
+        <Row>
+          <Column colLg={2} colMd={2}>
+            <ul className={nav}>
+              {firstCol &&
+                firstCol.map((link, i) => (
+                  <li key={i} className={listItem}>
+                    <a href={link.href} aria-label={link.linkText}>
+                      {link.linkText}
+                    </a>
+                  </li>
+                ))}
+            </ul>
+          </Column>
+          <Column colLg={2} colMd={2}>
+            <ul className={nav}>
+              {secondCol &&
+                secondCol.map((link, i) => (
+                  <li key={i} className={listItem}>
+                    <a href={link.href} aria-label={link.linkText}>
+                      {link.linkText}
+                    </a>
+                  </li>
+                ))}
+            </ul>
+          </Column>
+          <Column
+            className={content}
+            colLg={4}
+            colMd={4}
+            colSm={3}
+            offsetLg={2}
+          >
+            <Content />
+          </Column>
+        </Row>
+        <Row>
+          <Column colLg={3}>
+          </Column>
+        </Row>
+      </Grid>
+    </footer>
+  );
 };
 
-const CustomFooter = () => <Footer links={links} Content={Content} />;
 
-export default CustomFooter;
+const DefaultContent = () => (
+  <p>
+    Shadow this content by importing the theme Footer and supplying your own
+    props.
+  </p>
+);
+
+Footer.defaultProps = {
+  links: {
+    firstCol: [],
+    secondCol: [],
+  },
+  Content: DefaultContent,
+};
+
+Footer.propTypes = {
+  /**
+   * Specify the first and second columns of your links
+   */
+  links: PropTypes.exact({
+    firstCol: PropTypes.arrayOf(
+      PropTypes.shape({
+        href: PropTypes.string,
+        linkText: PropTypes.string,
+      })
+    ),
+    secondCol: PropTypes.arrayOf(
+      PropTypes.shape({
+        href: PropTypes.string,
+        linkText: PropTypes.string,
+      })
+    ),
+  }),
+
+  /**
+   * Specify the first and second columns of your links
+   */
+  Content: PropTypes.elementType,
+
+  /**
+   * Provide a logo to be rendered in the bottom left corner
+   */
+};
+
+export default Footer;

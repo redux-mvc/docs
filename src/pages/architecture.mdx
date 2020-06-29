@@ -1,0 +1,111 @@
+---
+title: Architecture
+description: Module architecture of redux-mvc
+---
+
+import Module from "../images/Module.svg";
+import ModuleComposition from "../images/ModuleComposition.svg";
+
+<PageDescription>
+
+Intro to the *redux-mvc* architecture.
+
+</PageDescription>
+
+
+<AnchorLinks>
+  <AnchorLink>Module Diagram</AnchorLink>
+  <AnchorLink>Module Composition</AnchorLink>
+  <AnchorLink>Architecture Components</AnchorLink>
+  <AnchorLink>Implementation</AnchorLink>
+</AnchorLinks>
+
+## Module Diagram
+
+The *module* is the unit of composition and architecture, meaning that you can create bigger modules out of tiny ones but the architecture remains the same, it is always a module.
+
+<Column colLg='4'>
+  <Module />
+</Column>
+
+### Interactions
+
+- The *model* receives events (actions) from the *view* and *controller* and updates the state.
+
+- The *view* consumes the *selectors* and dispatches events.
+
+- The *selectors* consume the *model* and the *global database*.
+
+- The *controller* observers the events from the *view* or other *controllers* and dispatches new events or does I/O. They consume the *selectors*.
+
+## Module Composition
+
+Given three modules (a, b, c) you can create a module out of them by using the *merge* decorator. You can use *views* from child modules in it, you can cosume its *selectors* and watch its events with your *controller*.
+
+In this case is clear why a *controller* can act as supervisor of other *modules*.
+
+<Column colLg='4'>
+  <ModuleComposition />
+</Column>
+
+## Architecture Components
+
+### Model
+
+The *model* is the business logic layer where the state updates happen. 
+
+You can define the *iniState* and *reducers* in it. *redux-mvc* will dinamically generate the *actions* and *getters* for you so you avoid writing a bit of boilerplate.
+
+**Tools:** *createModel* decorator.
+
+### View
+
+The *view* is the presentational layer. By using dependency injection we can keep it as stateless as posible.
+
+**Tools:** *connect* hoc, *useModel* hook.
+
+### Controller
+
+The *controller* in the *redux-mvc* architecture is the layer that coordinates the other layers by *modeling time*, meaning it will look at a stream of events (redux actions) and it will act acordingly by firing other events, calling the api or forking processes. The *controller* can also act as supervisor of child modules.
+
+*redux-mvc* does not bake in a *controller* layer, it's up to your needs an choice. Common redux controller layers are: *redux-saga*, *redux-thunk*, *redux-observable* ...
+
+In the case of this basic example we won't need to be modeling time or coordinating child modules.
+
+### Selectors
+
+*selectors* is a layer of indirection that decouples the *view* from the *model*. It's also the place where you derive and/or combine data between several *models*.
+
+**Tools:** *createSelector*.
+  
+### Module
+
+The *module* is the configuration layer that wires the *model* and *controller* and plugs other modules in. It adds the lifecycle methods that are required by the *context*.
+
+**Tools:** *createModule*.
+
+### Context
+
+The *context* is where you run the page's *module*. 
+
+**Tools:** *createContext*.
+
+### Global Database
+
+The *global database* can be any store of global available data: *graphql*, *datascript* or even a *redux-mvc* data module. 
+
+In here you put any data that can be globally available, usually api data.
+
+**Tools:** *createContext* to set the global context, *addBridge* decorator to consume the global context.
+
+**Note:** as of this time the only global store I use is other *redux-mvc* module. In the future I would like to try using *graphql* or *datascript* as database.
+
+## Implementation
+
+The architecture diagram above can be implemented with any tool that supports composition of models and a global context to run the model. 
+
+*redux* is functional, data for the state and functions for updates, is easily composable. 
+
+*react* contex api works just fine as model provider.
+
+Other important thing to notice about the implementation is the *decorators* api for the modules. It is useful for creating new modules out of other modules, by composition or enhacement of functionalities, but more important, it allows *redux-mvc* to be customized by the consumer. You can rewrite any of the decorators meanwhile it does what is suposed to do and implements the decorator api. In fact this is the recipy to add your *controller* layer of preference.

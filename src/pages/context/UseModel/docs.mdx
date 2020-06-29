@@ -1,0 +1,56 @@
+---
+title: UseModel
+tabs: ['Usage', 'Docs']
+description: Guide on how to apply the useModel hook
+---
+
+## useModel
+
+Hook.
+
+Consumes the *selectors* and wraps *actions*.
+
+```ts
+useModel(selectors: Map<Selectors>, actions: Map<ActionCreator>, props: Object)
+```
+
+### Usage
+
+  - Injects *selectorProps*, wrapped *actionProps* and the *instanceId*.
+
+  ```ts
+  const { count, add } = useModel({
+    count: getters.count,
+  }, {
+    add: actions.add,
+  }, {
+    instanceId: "customInstanceId"
+  })
+  ```
+
+### Params
+
+  1. `selectors: Map<SelectorFunction> | null`
+
+    The `selectors` that will consume the *state* from the parent *module*.
+
+    Each *key* of the `selectors` Map will be executed against the *module store*.
+
+  2. `actions: Map<ActionCreator> | null`
+
+    Each *key* of the `actions` Map will be wrapped with *module dispatch* function.
+
+  3. `props: Object`
+
+    An `instanceId` passed by props to the hook will take precedence over the context `instanceId`.
+
+### Return value
+
+```ts
+ModelProps: {
+  ...selectorProps: Map<Any>,
+  ...wrappedActionProps: Map<Dispatch<ActionCreator>>,
+  instanceId: String
+}
+
+```

@@ -1,0 +1,44 @@
+---
+title: Bridge Middleware
+tabs: ['Usage', 'Docs']
+description: Description of the bridge middleware
+---
+
+## addBridge
+
+*redux-mvc* allows to setup a global context that can be accesible from every other child context. It is useful to put any data or state that will be reused among contexts.
+
+
+- To provide the global context you must specify the *contextId* as the special constant *GLOBAL_CONTEXT_ID*:
+
+    ```js
+    const decorate = createContext({
+       module,
+       contextId: GLOBAL_CONTEXT_ID
+    })
+
+    ```
+
+- To consume state from the global context you must pass an array of namespaces to the *addBridge* module decorator:
+
+  ```ts
+  const newModule = R.compose(
+      addBridge({ trackGlobalNamespaces: [RoutingModel.namespace] })
+      ...
+  )(module)
+  
+  Note: The actions from the global namespace will be forwarded to the local context.
+
+  ```
+
+- To choose what kind of actions can be dispatched to the global context you need to specify the *dispatchToGlobal* predicate function:
+
+  ```ts
+  const newModule = R.compose(
+      addBridge({ 
+        dispatchToGlobal: action => action.type === "Routing/push" 
+      })
+      ...
+  )(module)
+
+  ```

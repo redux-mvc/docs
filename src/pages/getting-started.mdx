@@ -1,0 +1,151 @@
+---
+title: Getting started
+description: Getting started with redux-mvc
+---
+
+<PageDescription>
+
+I'll gide you through the installation and basic setup for the *redux-mvc* counter example.
+
+</PageDescription>
+
+
+<AnchorLinks>
+  <AnchorLink>Install</AnchorLink>
+  <AnchorLink>Folder Structure</AnchorLink>
+  <AnchorLink>Model</AnchorLink>
+  <AnchorLink>View</AnchorLink>
+  <AnchorLink>Module</AnchorLink>
+  <AnchorLink>Context</AnchorLink>
+</AnchorLinks>
+
+## Installation
+
+
+  ```shell
+  npm install @redux-mvc/redux-mvc
+  ```
+
+### Dependencies
+
+  ```shell
+  npm install redux react react-dom
+  ```
+  
+## Folder Structure
+
+  ```ts
+  Counter
+    | index.js // module file
+    | model.js // model file
+    | View 
+      | index.js // context file
+      | Counter.js // counter view file
+    
+  ```
+  
+  **Note:** render the module by requiring `Counter/View`
+
+## Model
+
+The *model* is the business logic layer where the state updates happen. 
+
+You can define the *iniState* and *reducers* in it. *redux-mvc* will dinamically generate the *actions* and *getters* for you so you avoid writing a bit of boilerplate.
+
+  ```ts
+  import { createModel } from "redux-mvc"
+
+  const model = createModel({
+      iniState: {
+          count: 0,
+      },
+      reducers: {
+          add: (state, action) => ({ count: state.count + 1 }),
+          reset: (state, action) => ({ count: 0 }),
+      },
+      namespace: "Counter",
+  })
+
+  const { actions, getters } = model
+
+  export { actions, getters }
+
+  export default model
+  ```
+
+## View
+
+The *view* is the presentational layer. By using dependency injection we can keep it as stateless as posible.
+
+  ```ts
+  import React from "react"
+  import { connect } from "redux-mvc"
+
+  import { noop } from "redux-mvc/utils"
+
+  import { getters, actions } from "./model"
+
+  const decorate = connect(
+      { count: getters.count },
+      { add: actions.add, reset: actions.reset }
+  )
+
+  const Counter = ({
+      count = 0,
+      add = noop,
+      reset = noop,
+  }) => (
+      <div style={{ display: "flex" }}>
+          <div style={{ marginRight: 10 }}>Count:</div>
+          <button
+              style={{ marginRight: 10 }}
+              onClick={add}
+          >
+              add
+          </button>
+          <button style={{ marginRight: 10 }} onClick={reset}>
+              reset
+          </button>
+          <div>{count}</div>
+      </div>
+  )
+
+  export default decorate(Counter)
+  ```
+
+## Module
+
+The *module* is the configuration layer, in this case it adds lifecycle methods required by the *context*.
+
+  ```ts
+  import { createModule } from "redux-mvc"
+
+  import model from "./model.js"
+
+  const module = createModule(model)
+
+  export default module
+  
+  ```
+
+## Context
+
+Finally the *context* is where you run an instance of the page's *module*. 
+
+  ```ts
+  import React from "react"
+  import { createContext } from "redux-mvc"
+
+  import module from "../index"
+  import Counter from "./Counter.js"
+
+  const decorate = createContext({
+      module,
+  }),
+
+  export default decorate(Counter)
+
+  ```
+  
+  
+

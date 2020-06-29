@@ -1,0 +1,159 @@
+---
+title: Model Docs
+tabs: ['Usage', 'Docs']
+description: Model Docs
+---
+
+<AnchorLinks>
+  <AnchorLink>createModel</AnchorLink>
+  <AnchorLink>getter</AnchorLink>
+  <AnchorLink>actionCreator</AnchorLink>
+</AnchorLinks>
+
+## createModel
+
+Creates a *redux-mvc* model: *getters*, *setters* and *actionCreators*
+
+```js
+createModel(definition: ModelDefinition)
+```
+
+### Parameters
+
+  - **definition**
+
+  ```js
+  ModelDefinitionInterface: {
+    namespace: String,
+    iniState?: Object,
+    reducers?: Map<ReducerFunction>,
+    singleton?: Boolean,
+  }
+  ```
+
+  1. `namespace: String`
+
+    The namespace of the model.
+
+  2. `iniState?: Object`
+
+    Defines the initial state of the namespace. It will act as default if an instance is not found. Also *redux-mvc* will create a *getter* and *setter* for each key in the iniState object.
+
+    **Default:** `false`.
+
+  3. `reducers?: Map<ReducerFunction>`
+
+    Defines the reducers with the following signature of the model.
+
+    ```ts
+    ReducerFunction: (state: Object, action: ActionPayload) -> Partial<state>
+    ```
+
+    *redux-mvc* will shallow merge the returned partial state to the previous state.
+    *redux-mvc* will create one *ActionCreator* for each *key* in the *reducers* Map.
+
+    **Default:** `{}`.
+
+  4. `singleton?: Boolean`
+
+    Defines if the model is a singleton, one per each context. Meaning that every action goes to the default instance, and every getter returns the state of the default instance.
+
+    **Default:** `false`
+
+### Return value
+
+- **model**
+
+  ```ts
+  Model: {
+    namespace: String,
+    iniState: Object,
+    reducers: Map<ReducerFunction>,
+    singleton: Boolean,
+    actions: Map<ActionCreator>,
+    getters: Map<Getter>,
+  }
+  ```
+---
+  
+## getter
+
+Returns *key* property from the *state*
+
+```ts
+Getter<key>: (state: Object, props?: Object) -> Pick<state, key>
+```
+
+### Parameters
+
+  1. `state: Object`
+
+    The module's *state* Object.
+
+  2. `props?: Object`
+
+    The only prop that *getters* use is *props.instanceId* to return the *key* from the specified *instanceId*. 
+
+    If the *instanceId* is not found, the *getter* will return the *DEFAULT_INSTANCE_ID* slice.
+
+    **Default:** `{}`
+   
+### Special getters
+
+*redux-mvc* will provide 3 special *getters* in case you need them:
+
+  1. `getters.instance`
+
+    Will return the entire *instance* object specified by the *instanceId* as props.
+
+  2. `getters.namespace`
+
+    Will return the entire *namespace* object.
+
+  3. `getters.module`
+
+    Same as the *identity* function, it will return the entire module state.
+
+---
+
+
+## actionCreator
+
+  Creates an *ActionPayload* out of *payload*, *props* and *error*
+
+  ```ts
+  ActionCreator: (payload?: Any, props?: Object, error?: Any) -> ActionPayload
+  ```
+
+### Parameters
+
+  1. `payload?: Any`
+
+    Any information that should be communicated through the action
+
+    **Default:** `undefined`
+
+  2. `props?: Object`
+
+    Additional info that should be sent in the *ActionPayload*. E.g.: *meta*, *optimist*...
+
+    **Note:** *meta.instanceId* is used by *redux-mvc* to specify the target instance of the *action*.
+
+    **Default:** `{}`
+
+  3. `error?: Boolean`
+
+    Specify if there was an error or not.
+
+    **Default:** `false`
+
+### Return value
+
+  - **action**
+  ```ts
+  ActionPayload: {
+    payload: Any,
+    ...props,
+    error: Boolean
+  }
+  ```

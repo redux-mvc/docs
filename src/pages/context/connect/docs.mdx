@@ -1,0 +1,41 @@
+---
+title: Connect
+tabs: ['Usage', 'Docs']
+description: Guide on how to connect components
+---
+
+## connect
+
+HOC.
+
+Connects the *WrappedComponent* to the *module context*. 
+
+```ts
+connect(selectors: Map<Selectors>, actions: Map<ActionCreator>, options: Object)(Component: ReactComponent)
+```
+
+### Params
+
+  1. `selectors: Map<Selector> | null`
+
+    The `selectors` that will consume the *state* from the parent *module*.
+
+    Each *key* of the *selectors* Map will be injected as *prop* to the *WrappedComponent*.
+
+  2. `actions: Map<ActionCreator> | null`
+
+    Each *key* of the *actions* Map will wrapped into the module *dispatch* and injected as *prop* to the *WrappedComponent*.
+
+  3. `options.pure: Boolean`
+
+    If the *Component* is a functional component, wrapps it in *React.memo*.
+
+    **Default:** `true`
+
+  4. `Component: ReactComponent`
+
+    Component to be *connected*.
+  
+### Return value
+
+React Component with injected *selector props*, *action props* and the *instanceId*.

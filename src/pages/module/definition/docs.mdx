@@ -1,0 +1,253 @@
+---
+title: Decorators
+tabs: ['Usage', 'Docs']
+description: Decorators api docs
+---
+
+<AnchorLinks>
+  <AnchorLink>addReducer</AnchorLink>
+  <AnchorLink>addLifecycle</AnchorLink>
+  <AnchorLink>addBridge</AnchorLink>
+  <AnchorLink>createModule</AnchorLink>
+</AnchorLinks>
+
+## addReducer
+
+Mixes in a reducer created out of all the models reducer functions.
+
+### Usage
+
+  - Should be executed after merging all the modules:
+
+    ```ts
+    const newModule = R.compose(
+        ...
+        addReducer(),
+        ...
+        merge(counter),
+        merge(searchBar)
+    )(module)
+
+    ```
+
+### Return value
+
+  - **newModule**
+
+  ```ts
+  newModule = {
+      ...module,
+      reducer(state, action) {...},
+  }
+
+  ```
+
+**Methods:**
+
+  - **reducer**
+
+  ```ts
+  reducer: (previousState: Object, action: ActionPayload) -> nextState: Object
+
+  ```
+
+  Computes the *nextState* out of the *previousState* and *action*
+
+---
+
+## addLifecycle
+
+Adds lifecycle *constructor* and *componentWillUnmount* methods to the *module* for store creation. This methods will be called by the *redux-mvc Context* provider.
+
+### Usage
+
+  - Should be executed after all the other decorators.
+
+    ```ts
+    const newModule = R.compose(
+        addLifecycle(),
+        ...
+        merge(counter)
+    )(module)
+
+    ```
+
+### Return value
+  - **newModule**
+
+  ```ts
+  newModule = {
+      ...module,
+      constructor() {...},
+      componentWillUnmount() {...}
+  }
+
+  ```
+
+**Methods:**
+
+  - **constructor:**
+
+  ```ts
+  constructor: ({ moduleInstances, contextId, persist }) -> moduleInstance: ModuleInstance
+
+  ```
+
+  Creates the *store* and returns the *moduleInstance*.
+
+  Parameters:
+
+    1. `moduleInstances: Map<ModuleInstance>`
+
+      All the instances of modules keep by the *Provider*.
+
+    2. `contextId: Symbol | String`
+
+      The id of the context created by the *Context* provider.
+
+    3. `persist?: Boolean`
+
+      Indicates to persist the store object after the *Context* is unmounted.
+
+  Return Value
+
+    - Should return the *moduleInstance* object with the *store* in it.
+
+    ```ts
+    moduleInstance = {
+      store: StoreObject
+    }
+
+    ```
+
+
+  - **componentWillUnmount**
+
+  ```ts
+  componentWillUnmount: ({ moduleInstances, contextId, persist }) -> moduleInstance: ModuleInstance
+
+  ```
+
+  Removes the *store* from the *moduleInstance* if *persist* is false.
+
+  Parameters
+
+    1. `moduleInstances: Map<ModuleInstance>`
+
+      All the instances of modules keep by the *Provider*.
+
+    2. `contextId: Symbol | String`
+
+      The id of the context created by the *Context* provider.
+
+    3. `persist?: Boolean`
+
+      Indicates to persist the store object after the *Context* is unmounted.
+
+      *Default:* `true`
+
+  Return Value
+
+    - It may return the *moduleInstance* object with the *store* in it.
+
+    ```ts
+    moduleInstance = {
+      store?: StoreObject
+    }
+
+    ```
+
+---
+
+## addBridge
+
+Adds the *trackGlobalNamespaces* array and the *dispatchToGlobal* filter function, that will later be used by the bridgeMiddleware.
+
+### Usage
+
+  - Should be executed after any *merge* decorator if you want to override the default *trackGlobalNamespaces* and *dispatchToGlobal*.
+
+  ```ts
+  const newModule = R.compose(
+      addBridge({ trackGlobalNamespaces, dispatchToGlobal })
+      ...
+      merge(searchBar),
+  )(module)
+
+  ```
+
+### Parameters
+
+  1. `trackGlobalNamespaces?: Array<String>`
+
+    The array of namespace dependencies from the *global context*.
+
+    If *trackGlobalNamespaces* is not passed, then *addBridge* will merge the *trackGlobalNamespaces* from all the module dependencies.
+
+  2. `dispatchToGlobal?: (action: ActionPayload) -> Boolean`
+
+    This predicate function will be used by the *bridgeMiddleware* to forward actions to the *global context*.
+
+    If *dispatchToGlobal* is not passed, then *addBridge* will dispatch to the *global context* any action that is not in any *namespace* of the module dependencies.
+
+### Return value
+
+  - **newModule**
+
+  ```ts
+  newModule = {
+      ...module,
+      trackGlobalNamespaces,
+      dispatchToGlobal,
+  }
+
+  ```
+  
+---
+
+## createModule
+
+Helper.
+
+Applies *addReducer* and *addLifecycle* in that order to create a module.
+
+
+### Usage
+
+  - Can be executed by itself,
+
+  ```ts
+  const newModule = creatModule(model)
+
+  ``` 
+
+  or after any other decorator.
+
+  ```ts
+  const newModule = R.compose(
+    creatModule, 
+    ...
+    addBridge(...),
+    merge(searchBar),
+    merge(counter)
+  )(model)
+
+  ``` 
+
+### Parameters
+
+  1. `model: ModelInterface`
+
+### Return value
+
+  - **newModule**
+
+  ```ts
+  newModule = {
+      ...model,
+      reducer(state, action) {...},
+      constructor() {}, // creates the store object
+      componentWillUnmount() {} // creates the store object
+  }
+
+  ```

@@ -1,0 +1,41 @@
+---
+title: Module Composition Docs
+tabs: ['Usage', 'Docs']
+description: Module Composition api docs
+---
+
+## merge
+
+```ts
+merge(moduleA: ModuleInterface)(moduleB: ModuleInterface)
+```
+
+Merges *redux-mvc* modules from right to left:
+
+### Usage
+
+  - Should be executed before *addReducer*.
+
+  ```ts
+  const newModule = R.compose(
+      ...
+      createReducer(),
+      ...
+      merge(searchBar),
+  )(module)
+
+  ```
+
+### Return value
+
+  - **newModule**
+
+  ```ts
+  newModule = {
+      ...rightModule,
+      dependencies: {...left.dependencies, ...right.dependencies },
+      iniState: { ...left.iniState, ...right.iniState },
+      reducers: { ...left.reducers, ...right.reducers },
+  }
+
+```

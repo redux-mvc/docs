@@ -1,0 +1,42 @@
+---
+title: Defining the Module
+tabs: ['Usage', 'Docs']
+description: Guide for defining the redux-mvc module
+---
+<PageDescription>
+
+*Modules* are created by enhancing or decorating a *model*.
+
+</PageDescription>
+
+# Decorators
+
+The module definition is based in using *decorators* that incrementally add functionality to a *model* or *module*.
+
+- The minimum module requirements are:
+
+  1. Adding the *reducer*
+  2. Adding the *lifeCycle* methods (for creating the store object)
+  
+  ```js
+  const newModule = R.compose(
+      addLifecycle(),
+      addReducer(),
+  )(model)
+
+  ```
+
+  **Note:** remember function composition works from right to left
+  
+- The *decorators* api is just objects and function composition, then *redux-mvc* gives you the possibility of writing your own *addReducer* and *addLifecycle*, or any other *decorator* to customize the framework.
+
+  E.g.: The *createModule* decorator is the composition of *addLifecycle* and *addReducer*, and you can define your own.
+
+    ```js
+    const createModule = R.compose(
+        addLifecycle(),
+        addReducer(),
+    )
+
+    ```
+

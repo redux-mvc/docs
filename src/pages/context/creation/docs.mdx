@@ -1,0 +1,57 @@
+---
+title: Create Context
+tabs: ['Usage', 'Docs']
+description: Guide on how to create contexts
+---
+
+## createContext
+
+HOC.
+
+Creates a *redux-mvc* context, making the module's store available to the children.
+
+```ts
+createContext(definition: Definition)(Component: ReactComponent)
+```
+
+### Usage
+
+  - Creates a *context*, runs the *module* and makes the *context* available.
+
+  ```ts
+  const Page = createContext({
+    module
+  })(PageLayout)
+
+  ```
+
+### Parameters
+
+  ```ts
+  Definition = {
+    module: ModuleInterface,
+    persist?: Boolean,
+    contextId?: String | Symbol
+  }
+  ```
+
+  1. `module: ModuleInterface`
+
+    The module to be executed in the context.
+
+  2. `persist?: Boolean`
+
+    Persists the *store object* when unmounted.
+
+    **Default:** `true`
+
+  2. `contextId?: String | Symbol`
+
+    Id where the *store object* will be persisted.
+
+    **Default:** `Symbol("contextId")`
+
+
+## Return value
+
+React Component that is a *Provider* of the *context*.

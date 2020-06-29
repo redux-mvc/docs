@@ -1,0 +1,44 @@
+---
+title: UseModel
+tabs: ['Usage', 'Docs']
+description: Guide on how to apply the useModel hook.
+---
+
+<PageDescription>
+
+Consumes *state* from the context and wrapps *actionCreators* in the context's dispatch.
+
+</PageDescription>
+
+The main difference with the *connect* Hoc is that it would not apply the *instanceId* into the context, nor the *renderLevel* that ensures the parents of a component render first.
+
+### E.g.:
+
+```ts
+const Component = () => {
+    const { count, add } = useModel({
+      count: getters.count,
+    }, {
+      add: actions.add,
+      add: actions.reset
+    }, {
+      instanceId: "customInstanceId"
+    })
+
+
+    return (
+      <div>
+          <button
+              onClick={add}
+          >
+              add
+          </button>
+          <button style={{ marginRight: 10 }} onClick={reset}>
+              reset
+          </button>
+          <div>{count}</div>
+      </div>
+    )
+}
+
+```
