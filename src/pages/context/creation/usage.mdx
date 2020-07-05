@@ -11,11 +11,22 @@ Create an instance of a *module* and make it available in the *context*.
 </PageDescription>
 
 ### E.g.:
-  - Given
 
   ```ts
   const Page = createContext({
     module
+  })(PageLayout)
+
+  ```
+
+To set the *globalContext* pass *GLOBAL_CONTEXT_ID*
+
+  ```ts
+  import { createContext, GLOBAL_CONTEXT_ID } from "redux-mvc"
+
+  const Page = createContext({
+    module
+    contextId: GLOBAL_CONTEXT_ID
   })(PageLayout)
 
   ```

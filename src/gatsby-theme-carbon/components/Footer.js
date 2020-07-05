@@ -7,7 +7,7 @@ import {
   nav,
   listItem,
   content,
-} from './Footer.module.scss';
+} from 'gatsby-theme-carbon/src/components/Footer/Footer.module.scss';
 
 const Footer = ({ Content, links, Logo }) => {
   const { firstCol, secondCol } = links;
@@ -60,10 +60,7 @@ const Footer = ({ Content, links, Logo }) => {
 
 
 const DefaultContent = () => (
-  <p>
-    Shadow this content by importing the theme Footer and supplying your own
-    props.
-  </p>
+  <p></p>
 );
 
 Footer.defaultProps = {

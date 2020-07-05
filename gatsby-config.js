@@ -1,10 +1,10 @@
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Theme Carbon',
-    description: 'A Gatsby theme for the carbon design system',
-    keywords: 'gatsby,theme,carbon',
+    title: 'redux-mvc',
+    description: 'MVC framework with react and redux',
+    keywords: 'mvc,framework,react,redux,composition',
   },
-  pathPrefix: `/gtc`,
+  pathPrefix: `/docs`,
   plugins: [
     {
       resolve: 'gatsby-plugin-manifest',
@@ -21,9 +21,7 @@ module.exports = {
       resolve: 'gatsby-theme-carbon',
       options: {
         repository: {
-          baseUrl:
-            'https://github.com/carbon-design-system/gatsby-theme-carbon',
-          subDirectory: '/packages/example',
+          baseUrl: 'https://github.com/redux-mvc/docs',
         },
       },
     },

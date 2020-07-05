@@ -4,11 +4,11 @@ import ResourceLinks from 'gatsby-theme-carbon/src/components/LeftNav/ResourceLi
 const links = [
   {
     title: 'github',
-    href: 'https://github.com/redux-mvc/redux-mvc',
+    href: 'https://github.com/redux-mvc/core',
   },
   {
     title: 'npm',
-    href: 'https://www.npmjs.com/package/@redux-mvc/redux-mvc',
+    href: 'https://www.npmjs.com/package/@redux-mvc/core',
   },
 ];
 

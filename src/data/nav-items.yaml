@@ -26,9 +26,14 @@
     - title: Connect 
       path: /context/connect/usage
     - title: UseModel 
-      path: /context/useModel/usage
+      path: /context/usemodel/usage
 
 - title: Middleware
   pages:
     - title: Bridge 
       path: /middleware/bridge/usage
+
+- title: Examples
+  pages:
+    - title: Bridge 
+      path: /examples

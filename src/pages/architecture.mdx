@@ -22,7 +22,7 @@ Intro to the *redux-mvc* architecture.
 
 ## Module Diagram
 
-The *module* is the unit of composition and architecture, meaning that you can create bigger modules out of tiny ones but the architecture remains the same, it is always a module.
+The *module* is the unit of composition and architecture, meaning that you can create bigger modules out of tiny ones while the architecture remains the same, it is always a module.
 
 <Column colLg='4'>
   <Module />
@@ -40,7 +40,7 @@ The *module* is the unit of composition and architecture, meaning that you can c
 
 ## Module Composition
 
-Given three modules (a, b, c) you can create a module out of them by using the *merge* decorator. You can use *views* from child modules in it, you can cosume its *selectors* and watch its events with your *controller*.
+Given three modules (a, b, c) you can create a module out of them by using the *merge* decorator. You can use *views* from child modules in it, you can consume its *selectors* and watch its events with your *controller*.
 
 In this case is clear why a *controller* can act as supervisor of other *modules*.
 
@@ -54,19 +54,19 @@ In this case is clear why a *controller* can act as supervisor of other *modules
 
 The *model* is the business logic layer where the state updates happen. 
 
-You can define the *iniState* and *reducers* in it. *redux-mvc* will dinamically generate the *actions* and *getters* for you so you avoid writing a bit of boilerplate.
+You can define the *iniState* and *reducers* in it. *redux-mvc* will dynamically generate the *actions* and *getters* for you so you avoid writing a bit of boilerplate.
 
-**Tools:** *createModel* decorator.
+**Tools:** [*createModel*](/model/docs) decorator.
 
 ### View
 
-The *view* is the presentational layer. By using dependency injection we can keep it as stateless as posible.
+The *view* is the presentational layer. By using dependency injection we can keep it as stateless as possible.
 
-**Tools:** *connect* hoc, *useModel* hook.
+**Tools:** [*connect*](/context/connect/docs) hoc, [*useModel*](/context/useModel/docs) hook.
 
 ### Controller
 
-The *controller* in the *redux-mvc* architecture is the layer that coordinates the other layers by *modeling time*, meaning it will look at a stream of events (redux actions) and it will act acordingly by firing other events, calling the api or forking processes. The *controller* can also act as supervisor of child modules.
+The *controller* in the *redux-mvc* architecture is the layer that coordinates the other layers by *modeling time*, meaning it will look at a stream of events (redux actions) and it will act accordingly by firing other events, calling the api or forking processes. The *controller* can also act as supervisor of child modules.
 
 *redux-mvc* does not bake in a *controller* layer, it's up to your needs an choice. Common redux controller layers are: *redux-saga*, *redux-thunk*, *redux-observable* ...
 
@@ -82,13 +82,13 @@ In the case of this basic example we won't need to be modeling time or coordinat
 
 The *module* is the configuration layer that wires the *model* and *controller* and plugs other modules in. It adds the lifecycle methods that are required by the *context*.
 
-**Tools:** *createModule*.
+**Tools:** [*createModule*](/module/definition/docs).
 
 ### Context
 
 The *context* is where you run the page's *module*. 
 
-**Tools:** *createContext*.
+**Tools:** [*createContext*](/context/creation/docs).
 
 ### Global Database
 
@@ -96,7 +96,7 @@ The *global database* can be any store of global available data: *graphql*, *dat
 
 In here you put any data that can be globally available, usually api data.
 
-**Tools:** *createContext* to set the global context, *addBridge* decorator to consume the global context.
+**Tools:** [*createContext*](/middleware/bridge/usage) to set the global context, [*addBridge*](/module/definition/docs#addbridge) decorator to consume the global context.
 
 **Note:** as of this time the only global store I use is other *redux-mvc* module. In the future I would like to try using *graphql* or *datascript* as database.
 
@@ -106,6 +106,6 @@ The architecture diagram above can be implemented with any tool that supports co
 
 *redux* is functional, data for the state and functions for updates, is easily composable. 
 
-*react* contex api works just fine as model provider.
+*react* context api works just fine as model provider.
 
-Other important thing to notice about the implementation is the *decorators* api for the modules. It is useful for creating new modules out of other modules, by composition or enhacement of functionalities, but more important, it allows *redux-mvc* to be customized by the consumer. You can rewrite any of the decorators meanwhile it does what is suposed to do and implements the decorator api. In fact this is the recipy to add your *controller* layer of preference.
+Other important thing to notice about the implementation is the *decorators* api for the modules. It is useful for creating new modules out of other modules, by composition or enhancement of functionalities, but more important, it allows *redux-mvc* to be customized by the consumer. You can rewrite any of the decorators meanwhile it does what is supposed to do and implements the decorator api. In fact this is the recipe to add your *controller* layer of preference.

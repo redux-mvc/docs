@@ -34,8 +34,6 @@ Merges *redux-mvc* modules from right to left:
   newModule = {
       ...rightModule,
       dependencies: {...left.dependencies, ...right.dependencies },
-      iniState: { ...left.iniState, ...right.iniState },
-      reducers: { ...left.reducers, ...right.reducers },
   }
 
 ```

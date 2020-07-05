@@ -13,7 +13,9 @@ description: Decorators api docs
 
 ## addReducer
 
-Mixes in a reducer created out of all the models reducer functions.
+- Creates a reducer from all the module dependencies.
+- Merges the iniState from all the module dependencies.
+- Merges the reducer functions from all the module dependencies.
 
 ### Usage
 
@@ -37,6 +39,8 @@ Mixes in a reducer created out of all the models reducer functions.
   ```ts
   newModule = {
       ...module,
+      iniState: Object,
+      reduers: Map<ReducerFunction>,
       reducer(state, action) {...},
   }
 
@@ -99,13 +103,13 @@ Adds lifecycle *constructor* and *componentWillUnmount* methods to the *module* 
 
     1. `moduleInstances: Map<ModuleInstance>`
 
-      All the instances of modules keep by the *Provider*.
+      All the instances of modules keep by the *Context* provider.
 
     2. `contextId: Symbol | String`
 
-      The id of the context created by the *Context* provider.
+      The id of the context.
 
-    3. `persist?: Boolean`
+    3. `persist: Boolean`
 
       Indicates to persist the store object after the *Context* is unmounted.
 
@@ -134,17 +138,15 @@ Adds lifecycle *constructor* and *componentWillUnmount* methods to the *module* 
 
     1. `moduleInstances: Map<ModuleInstance>`
 
-      All the instances of modules keep by the *Provider*.
+      All the instances of modules keep by the *Context* provider.
 
     2. `contextId: Symbol | String`
 
-      The id of the context created by the *Context* provider.
+      The id of the context.
 
-    3. `persist?: Boolean`
+    3. `persist: Boolean`
 
       Indicates to persist the store object after the *Context* is unmounted.
-
-      *Default:* `true`
 
   Return Value
 

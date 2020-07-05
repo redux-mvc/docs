@@ -5,13 +5,13 @@ description: Getting started with redux-mvc
 
 <PageDescription>
 
-I'll gide you through the installation and basic setup for the *redux-mvc* counter example.
+Installation and basic setup for the *redux-mvc* counter example.
 
 </PageDescription>
 
 
 <AnchorLinks>
-  <AnchorLink>Install</AnchorLink>
+  <AnchorLink>Installation</AnchorLink>
   <AnchorLink>Folder Structure</AnchorLink>
   <AnchorLink>Model</AnchorLink>
   <AnchorLink>View</AnchorLink>
@@ -50,10 +50,10 @@ I'll gide you through the installation and basic setup for the *redux-mvc* count
 
 The *model* is the business logic layer where the state updates happen. 
 
-You can define the *iniState* and *reducers* in it. *redux-mvc* will dinamically generate the *actions* and *getters* for you so you avoid writing a bit of boilerplate.
+You can define the *iniState* and *reducers* in it. *redux-mvc* will dynamically generate the *actions* and *getters* for you so you avoid writing a bit of boilerplate.
 
   ```ts
-  import { createModel } from "redux-mvc"
+  import { createModel } from "@redux-mvc/core"
 
   const model = createModel({
       iniState: {
@@ -75,13 +75,11 @@ You can define the *iniState* and *reducers* in it. *redux-mvc* will dinamically
 
 ## View
 
-The *view* is the presentational layer. By using dependency injection we can keep it as stateless as posible.
+The *view* is the presentational layer. By using dependency injection we can keep it as stateless as possible.
 
   ```ts
   import React from "react"
-  import { connect } from "redux-mvc"
-
-  import { noop } from "redux-mvc/utils"
+  import { connect } from "@redux-mvc/core"
 
   import { getters, actions } from "./model"
 
@@ -92,8 +90,8 @@ The *view* is the presentational layer. By using dependency injection we can kee
 
   const Counter = ({
       count = 0,
-      add = noop,
-      reset = noop,
+      add,
+      reset,
   }) => (
       <div style={{ display: "flex" }}>
           <div style={{ marginRight: 10 }}>Count:</div>
@@ -118,7 +116,7 @@ The *view* is the presentational layer. By using dependency injection we can kee
 The *module* is the configuration layer, in this case it adds lifecycle methods required by the *context*.
 
   ```ts
-  import { createModule } from "redux-mvc"
+  import { createModule } from "@redux-mvc/core"
 
   import model from "./model.js"
 
@@ -134,7 +132,7 @@ Finally the *context* is where you run an instance of the page's *module*.
 
   ```ts
   import React from "react"
-  import { createContext } from "redux-mvc"
+  import { createContext } from "@redux-mvc/core"
 
   import module from "../index"
   import Counter from "./Counter.js"

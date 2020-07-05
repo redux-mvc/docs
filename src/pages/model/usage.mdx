@@ -15,7 +15,7 @@ The main difference is that *redux-mvc* will dynamically create *getters* and *a
 
 <AnchorLinks>
   <AnchorLink>Getters</AnchorLink>
-  <AnchorLink>Stters</AnchorLink>
+  <AnchorLink>Setters</AnchorLink>
   <AnchorLink>Reducers</AnchorLink>
   <AnchorLink>Actions</AnchorLink>
 </AnchorLinks>
@@ -121,7 +121,7 @@ The main difference is that *redux-mvc* will dynamically create *getters* and *a
 
 ### Actions
 
-*redux-mvc* will also dinamically create one *action creator* for each reducer function.
+*redux-mvc* will also dynamically create one *action creator* for each reducer function.
 
 - Given this model
 
@@ -139,7 +139,7 @@ The main difference is that *redux-mvc* will dynamically create *getters* and *a
   export { actions, getters }
   ```
 
-  `add` and `reset` actions will be dinamically generated and can later be used in views:
+  `add` and `reset` actions will be dynamically generated and can later be used in views:
 
   ```ts
   import { actions } from "./model"
