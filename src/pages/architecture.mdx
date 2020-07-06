@@ -22,7 +22,7 @@ Intro to the *redux-mvc* architecture.
 
 ## Module Diagram
 
-The *module* is the unit of composition and architecture, meaning that you can create bigger modules out of tiny ones while the architecture remains the same, it is always a module.
+The *module* is the unit of composition and architecture, meaning that you can create bigger modules out of tiny ones while the architecture remains the same.
 
 <Column colLg='4'>
   <Module />
@@ -36,7 +36,7 @@ The *module* is the unit of composition and architecture, meaning that you can c
 
 - The *selectors* consume the *model* and the *global database*.
 
-- The *controller* observers the events from the *view* or other *controllers* and dispatches new events or does I/O. They consume the *selectors*.
+- The *controller* observes the events from the *view* or other *controllers* and dispatches new events or does I/O. They consume the *selectors*.
 
 ## Module Composition
 
@@ -68,9 +68,9 @@ The *view* is the presentational layer. By using dependency injection we can kee
 
 The *controller* in the *redux-mvc* architecture is the layer that coordinates the other layers by *modeling time*, meaning it will look at a stream of events (redux actions) and it will act accordingly by firing other events, calling the api or forking processes. The *controller* can also act as supervisor of child modules.
 
-*redux-mvc* does not bake in a *controller* layer, it's up to your needs an choice. Common redux controller layers are: *redux-saga*, *redux-thunk*, *redux-observable* ...
+*redux-mvc* does not bake in a *controller* layer, it's up to your needs an choice. Common redux controller layers are: *redux-saga*, *redux-thunk*, *redux-observable** ...
 
-In the case of this basic example we won't need to be modeling time or coordinating child modules.
+**E.g.:** [sagas recipe](https://github.com/redux-mvc/core/blob/master/src/Examples/App/utils.js)
 
 ### Selectors
 

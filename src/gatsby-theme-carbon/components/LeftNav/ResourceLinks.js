@@ -10,6 +10,7 @@ const links = [
     title: 'npm',
     href: 'https://www.npmjs.com/package/@redux-mvc/core',
   },
+  { href: 'https://join.slack.com/t/redux-mvc/shared_invite/zt-flv1buf9-v~5kZ9yleC3c44i4d3FqHg', title: 'slack' },
 ];
 
 // shouldOpenNewTabs: true if outbound links should open in a new tab
