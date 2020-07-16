@@ -13,6 +13,8 @@ Create an instance of a *module* and make it available in the *context*.
 ### E.g.:
 
   ```ts
+  import { createContext } from "@redux-mvc/core"
+
   const Page = createContext({
     module
   })(PageLayout)
@@ -22,7 +24,7 @@ Create an instance of a *module* and make it available in the *context*.
 To set the *globalContext* pass *GLOBAL_CONTEXT_ID*
 
   ```ts
-  import { createContext, GLOBAL_CONTEXT_ID } from "redux-mvc"
+  import { createContext, GLOBAL_CONTEXT_ID } from "@redux-mvc/core"
 
   const Page = createContext({
     module

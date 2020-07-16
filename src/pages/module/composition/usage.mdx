@@ -18,6 +18,11 @@ description: Guide for module composition
   2. Continue creating the module as usual 
 
   ```ts
+  import * as R from "ramda"
+  import { merge, createModule } from "@redux-mvc/core"
+
+  import model from "./model"
+
   const CounterAndSearchbar = R.compose(
       createModule,
       ...

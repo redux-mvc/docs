@@ -15,6 +15,8 @@ The main difference with the *connect* Hoc is that it would not apply the *insta
 ### E.g.:
 
 ```ts
+import { useModel } from "@redux-mvc/core"
+
 const Component = () => {
     const { count, add } = useModel({
       count: getters.count,

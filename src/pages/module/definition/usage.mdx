@@ -18,7 +18,10 @@ The module definition is based in using *decorators* that incrementally add func
   1. Adding the *reducer*
   2. Adding the *lifeCycle* methods (for creating the store object)
   
-  ```js
+  ```ts
+  import * as R from "ramda"
+  import { addLifecycle, addReducer } from "@redux-mvc/core"
+
   const newModule = R.compose(
       addLifecycle(),
       addReducer(),
@@ -32,7 +35,10 @@ The module definition is based in using *decorators* that incrementally add func
 
   E.g.: The *createModule* decorator is the composition of *addLifecycle* and *addReducer*, and you can define your own.
 
-    ```js
+    ```ts
+    import * as R from "ramda"
+    import { addLifecycle, addReducer } from "@redux-mvc/core"
+
     const createModule = R.compose(
         addLifecycle(),
         addReducer(),

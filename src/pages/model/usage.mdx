@@ -27,6 +27,8 @@ The main difference is that *redux-mvc* will dynamically create *getters* and *a
 - For each property key in the initial state a *getter* function will be created:
 
   ```ts
+  import { createModel } from "@redux-mvc/core"
+
   const model = createModel({
       iniState: {
         count: 0,
@@ -42,6 +44,7 @@ The main difference is that *redux-mvc* will dynamically create *getters* and *a
   will generate a count *getter* (selector) to get the count out of the current state
 
   ```js
+  import { connect } from "@redux-mvc/core"
   import { getters } from "./model"
 
   const decorate = connect(
@@ -64,6 +67,8 @@ The main difference is that *redux-mvc* will dynamically create *getters* and *a
 - Similar to the getters, for each property key of the initial state a *setter* function will be created:
 
   ```js
+  import { createModel } from "@redux-mvc/core"
+
   const model = createModel({
       iniState: {
         count: 0,
@@ -79,6 +84,7 @@ The main difference is that *redux-mvc* will dynamically create *getters* and *a
   will generate a count *setter* (action) to set the count out of the current state
 
   ```ts
+  import { connect } from "@redux-mvc/core"
   import { actions } from "./model"
 
   const decorate = connect(
@@ -106,6 +112,8 @@ The main difference is that *redux-mvc* will dynamically create *getters* and *a
 - The module reducer will be created out of a collection of reducer functions:
 
   ```ts
+  import { createModel } from "@redux-mvc/core"
+
   const model = createModel({
       reducers: {
           add: ({ count }) => ({ count: count + 1 }),
@@ -126,6 +134,8 @@ The main difference is that *redux-mvc* will dynamically create *getters* and *a
 - Given this model
 
   ```ts
+  import { createModel } from "@redux-mvc/core"
+
   const model = createModel({
       reducers: {
           add: ({ count }) => ({ count: count + 1 }),
@@ -142,6 +152,7 @@ The main difference is that *redux-mvc* will dynamically create *getters* and *a
   `add` and `reset` actions will be dynamically generated and can later be used in views:
 
   ```ts
+  import { connect } from "@redux-mvc/core"
   import { actions } from "./model"
 
   const decorate = connect(

@@ -24,8 +24,7 @@ Connect the *view* to the model by using the *connect* HOC.
   - Given
 
   ```ts
-  import { connect } from "redux-mvc"
-  import { noop } from "redux-mvc/utils"
+  import { connect } from "@redux-mvc/core"
 
   import { getters, actions } from "../model"
 
@@ -36,8 +35,8 @@ Connect the *view* to the model by using the *connect* HOC.
 
   const Counter = ({
       count = 0,
-      add = noop,
-      reset = noop,
+      add,
+      reset,
   }) => (
       <div>
           <button

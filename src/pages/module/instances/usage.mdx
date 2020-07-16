@@ -15,42 +15,48 @@ There's 3 ways to work with instances:
 
   1. No instance, then the module will use the *DEFAULT_INSTANCE_ID* ("default")
 
-  ```js
-const Counters = () => (
-    <div>
-        <Counter />
-        ...
-    </div>
-)
+  ```ts
+  import Counter from "ui-kit/Counter/View"
+
+  const Counters = () => (
+      <div>
+          <Counter />
+          ...
+      </div>
+  )
 
   ```
 
   2. Constant instance
 
-  ```js
-const Counters = () => (
-    <div>
-        <Counter instanceId="apples" />
-        <Counter instanceId="oranges" />
-        ...
-    </div>
-)
+  ```ts
+  import Counter from "ui-kit/Counter/View"
+
+  const Counters = () => (
+      <div>
+          <Counter instanceId="apples" />
+          <Counter instanceId="oranges" />
+          ...
+      </div>
+  )
 
   ```
 
   3. Dynamic instance
 
-  ```js
-const Counters = ({ instances = []}) => (
-    <div>
-    { 
-      R.map(
-        instance => <Counter instanceId={instance} />, 
-        instances
-      ) 
-    }
-    </div>
-)
+  ```ts
+  import Counter from "ui-kit/Counter/View"
+
+  const Counters = ({ instances = []}) => (
+      <div>
+      { 
+        R.map(
+          instance => <Counter instanceId={instance} />, 
+          instances
+        ) 
+      }
+      </div>
+  )
 
   ```
   
