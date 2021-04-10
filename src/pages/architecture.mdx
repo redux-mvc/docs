@@ -22,7 +22,7 @@ Intro to the *redux-mvc* architecture.
 
 ## Module Diagram
 
-The *module* is the unit of composition and architecture, meaning that you can create bigger modules out of tiny ones while the architecture remains the same.
+The *module* is the unit of composition and architecture. This means that you can create bigger modules out of tiny ones and the architecture stays the same.
 
 <Column colLg='4'>
   <Module />
@@ -30,13 +30,13 @@ The *module* is the unit of composition and architecture, meaning that you can c
 
 ### Interactions
 
-- The *model* receives events (actions) from the *view* and *controller* and updates the state.
+- The *model* receives events (actions) from the *view* or the *controller* and updates the state.
 
 - The *view* consumes the *selectors* and dispatches events.
 
 - The *selectors* consume the *model* and the *global database*.
 
-- The *controller* observes the events from the *view* or other *controllers* and dispatches new events or does I/O. They consume the *selectors*.
+- The *controller* observes the events from the *view* or the other *controllers* and dispatches new events or does I/O. They consume the *selectors*.
 
 ## Module Composition
 

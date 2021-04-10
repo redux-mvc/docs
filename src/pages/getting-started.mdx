@@ -50,7 +50,7 @@ Installation and basic setup for the *redux-mvc* counter example.
 
 The *model* is the business logic layer where the state updates happen. 
 
-You can define the *iniState* and *reducers* in it. *redux-mvc* will dynamically generate the *actions* and *getters* for you so you avoid writing a bit of boilerplate.
+You can define the *iniState* and *reducers* in it and *redux-mvc* will dynamically generate *actions* and *getters* for you so you avoid writing a bit of boilerplate.
 
   ```ts
   import { createModel } from "@redux-mvc/core"
@@ -113,7 +113,7 @@ The *view* is the presentational layer. By using dependency injection we can kee
 
 ## Module
 
-The *module* is the configuration layer, in this case it adds lifecycle methods required by the *context*.
+The *module* is the configuration layer. In this case it adds lifecycle methods required by the *context*.
 
   ```ts
   import { createModule } from "@redux-mvc/core"
@@ -128,7 +128,7 @@ The *module* is the configuration layer, in this case it adds lifecycle methods 
 
 ## Context
 
-Finally the *context* is where you run an instance of the page's *module*. 
+The *context* is where you run an instance of a *module*. 
 
   ```ts
   import React from "react"

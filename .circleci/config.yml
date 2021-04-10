@@ -10,17 +10,17 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-{{ checksum "package-lock.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-      - run: yarn install --pure-lockfile
+      - run: npm ci
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Build Docs
-          command: yarn build --prefix-paths
+          command: npm run build -- --prefix-paths
       - persist_to_workspace:
           root: ./
           paths: public
@@ -38,10 +38,10 @@ jobs:
             - "e5:7a:f1:ea:00:f6:f3:09:eb:3e:b2:f2:9d:6a:06:f8"
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-{{ checksum "package-lock.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-      - run: yarn install --pure-lockfile
+      - run: npm ci
       - attach_workspace:
           at: public/
       - run:

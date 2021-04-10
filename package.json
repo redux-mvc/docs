@@ -1,27 +1,22 @@
 {
-  "name": "@redux-mvc/docs",
+  "name": "example",
   "private": true,
-  "version": "1.0.0",
-  "author": "Gonzalo Rafael Acosta (https://github.com/gacosta89)",
-  "license": "MIT",
+  "version": "1.28.0",
+  "license": "Apache 2.0",
   "scripts": {
     "dev": "gatsby develop -H 0.0.0.0",
-    "dev:clean": "yarn clean && yarn dev",
+    "dev:clean": "gatsby clean && gatsby develop -H 0.0.0.0",
     "build": "gatsby build",
-    "build:clean": "yarn clean && gatsby build",
+    "build:clean": "npm run clean && gatsby build",
     "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "build:analyze": "ANALYZE=true yarn build",
-    "deploy": "yarn clean && gatsby build --prefix-paths && gh-pages -d public"
+    "clean": "gatsby clean"
   },
   "dependencies": {
-    "gatsby": "^2.19.0",
-    "gatsby-plugin-react-svg": "^3.0.0",
-    "gatsby-theme-carbon": "^1.22.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
-  },
-  "devDependencies": {
-    "gh-pages": "^3.1.0"
+    "gatsby": "^2.24.14",
+    "gatsby-plugin-react-svg": "^3.0.1",
+    "gatsby-theme-carbon": "^1.28.0",
+    "gh-pages": "^3.1.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   }
 }
